@@ -1,7 +1,7 @@
 * Startup Config
 Do some things that we want to happen before everything else.
 ** Disable noisy startup things
-   Disable startup messages, the splash screen, and the scratch message, as they annoy me.
+   Disable startup messages, the splash screen, and the scratch message.
 
     #+name: disable-annoyances
     #+begin_src emacs-lisp :tangle yes
@@ -11,11 +11,12 @@ Do some things that we want to happen before everything else.
     (setq initial-buffer-choice "~/")
     #+end_src
 
-** Always install packages if they aren't already installed.
-    $+name: package-management
-    #+begin_src emacs-lisp :tangle yes
-    (setq use-package-always-ensure t)
-    #+end_src
+* Always install packages if they aren't already installed.
+  Or, in other words, if you start with nothing but `init.el` and the `.org` files, the various `use-package` calls will bootstrap the environment for you. (Subject to any caveats noted in [[../README.md][README.md]])
+   #+name: package-management
+   #+begin_src emacs-lisp :tangle yes
+   (setq use-package-always-ensure t)
+   #+end_src
 
 ** Security
 *** Check TLS
@@ -173,10 +174,19 @@ Do some things that we want to happen before everything else.
 
            (winum-mode)
            )
+   #+end_src
 
+   And enable winner mode, so enable window configuration history. So hitting `C-c <Left>` would go to previous window settings. Handy when I mix up my horizontals and my verticals, or if Emacs default split doesn't work for me.
+
+   #+begin_src emacs-lisp :tangle yes
          ;; Enable winner-mode for better window management
          (winner-mode)
 
+   #+end_src
+
+   Use eyebrowse mode to save and switch between window arrangements. I need to use this more than I currently do.
+
+   #+begin_src emacs-lisp :tangle yes
          ;; Install and use eyebrowse for workspace management
          (use-package eyebrowse
            :diminish eyebrowse-mode
