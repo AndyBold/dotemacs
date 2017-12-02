@@ -1,5 +1,5 @@
 * Startup Config
-Do some things that we want to happen before everythng else.
+Do some things that we want to happen before everything else.
 ** Disable noisy startup things
    Disable startup messages, the splash screen, and the scratch message, as they annoy me.
 
@@ -11,31 +11,11 @@ Do some things that we want to happen before everythng else.
     (setq initial-buffer-choice "~/")
     #+end_src
 
-** Package management
-***  Make sure that use-package is installed
-     #+name: package-management
-     #+begin_src emacs-lisp :tangle yes
-     (if (not (package-installed-p 'use-package))
-     (progn
-       (package-refresh-contents)
-       (package-install 'use-package)))
-     (require 'use-package)
-   #+end_src
-
-*** Always install packages if they aren't already installed.
+** Always install packages if they aren't already installed.
     $+name: package-management
     #+begin_src emacs-lisp :tangle yes
     (setq use-package-always-ensure t)
     #+end_src
-
-** Configure MELPA archive sources
-   #+begin_src emacs-lisp :tangle yes
-   (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                            ("gnu"       . "https://elpa.gnu.org/packages/")
-                            ("marmalade" . "https://marmalade-repo.org/packages/")
-                            ("melpa"     . "https://melpa.org/packages/")
-                            ("elpy"      . "https://jorgenschaefer.github.io/packages/")))
-   #+end_src
 
 ** Security
 *** Check TLS
@@ -296,7 +276,7 @@ Do some things that we want to happen before everythng else.
 
    #+end_src
 ** Editing
-*** Core editing tweaks and things
+*** Core editing tweaks
     This is a collection of various general editing things. Some of them probably sit better in other places but, for now, they're here.
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
