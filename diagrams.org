@@ -1,0 +1,25 @@
+* Diagrams
+  Settings for various diagram related things.
+
+** Graphviz
+   #+begin_src emacs-lisp :tangle yes
+   (use-package graphviz-dot-mode)
+   #+end_src
+
+** PlantUML
+   #+begin_src emacs-lisp :tangle yes
+     (use-package plantuml-mode
+       :config
+       (progn
+         (setq plantuml-jar-path "/usr/local/Cellar/plantuml/1.2017.18/libexec/plantuml.jar")
+         (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2017.18/libexec/plantuml.jar")
+         (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+       ))
+
+     (use-package flycheck-plantuml
+       :config
+       (with-eval-after-load 'flycheck
+       (flycheck-plantuml-setup))
+       )
+
+   #+end_src

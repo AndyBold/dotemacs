@@ -1,0 +1,5 @@
+* JSON settings
+  #+begin_src emacs-lisp :tangle yes
+    (use-package json-mode)
+    (use-package json-navigator)
+  #+end_src

@@ -1,0 +1,25 @@
+* My custom key binds
+** Kill words, not characters
+
+   backward-kill-word as alternative to Backspace:
+     - Kill the entire word instead of hitting Backspace key several times. To do this will bind the =backward-kill-region= function to the =C-w= key combination
+
+  #+begin_src emacs-lisp :tangle yes
+  (global-set-key "\C-w" 'backward-kill-word)
+  (global-set-key "\C-x\C-k" 'kill-region)
+  (global-set-key "\C-c\C-k" 'kill-region)
+  #+end_src
+
+** Align
+   Align the lines in a region based on a regexp.
+
+   #+begin_src emacs-lisp :tangle yes
+   (global-set-key (kbd "C-c =") 'align-regexp)
+   #+end_src
+
+** Toggle comments
+   Toggle comments on or off for the selected region. Language aware, so you get the correct comment syntax.
+
+   #+begin_src emacs-lisp :tangle yes
+   (global-set-key (kbd "C-c #") 'comment-or-uncomment-region)
+   #+end_src

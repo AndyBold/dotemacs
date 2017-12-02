@@ -1,0 +1,16 @@
+* Jira
+  Credentials go into a standard .authinfo, or .authinfo.gpg, file. And it's always port even for https. e.g.:
+  =machine jira.host.name login YourLogin password "Your Password"  port 80=
+
+  #+begin_src emacs-lisp :tangle yes
+      (use-package jira
+        :init
+        (use-package xml-rpc)
+
+        :config
+        (use-package org-jira)
+        (use-package jira-markup-mode)
+        ;;  (setq jiralib-url "https://jira.somewhere.com")
+        (setq org-jira-worklog-sync-p nil)
+      )
+  #+end_src

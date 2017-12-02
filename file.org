@@ -1,0 +1,46 @@
+* Files
+
+  Automatically revert buffers that are updated outside Emacs. e.g., org files updated by git pull.
+
+  #+begin_src emacs-lisp :tangle yes
+  (global-auto-revert-mode t)
+  #+end_src
+
+
+  Remove trailing whitespace when saving.
+
+  #+begin_src emacs-lisp :tangle yes
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  #+end_src
+
+
+  Put backup files in a consistent place.
+  - Makes it easier to find them after a mid-edit crash
+  - Stops them from crudding up git directories
+
+  #+begin_src emacs-lisp :tangle yes
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  #+end_src
+
+
+  And the same for autosaves.
+
+  #+begin_src emacs-lisp :tangle yes
+  (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
+  (setq auto-save-list-file-prefix autosave-dir)
+  (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+  #+end_src
+
+  And, in case I get round to using it, configure tramp to use the same
+
+  #+begin_src emacs-lisp :tangle yes
+  (setq tramp-backup-directory-alist backup-directory-alist)
+  (setq tramp-auto-save-directory autosave-dir)
+  (setq tramp-default-method "ssh")
+  #+end_src
+
+
+  Sentences end with a single space.
+  #+begin_src emacs-lisp :tangle yes
+  (setq sentence-end-double-space nil)
+  #+end_src

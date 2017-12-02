@@ -1,0 +1,7 @@
+* Snippets
+  #+begin_src emacs-lisp :tangle yes
+    (use-package yasnippet
+      :config
+      (yas-global-mode 1))
+
+  #+end_src

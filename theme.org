@@ -1,0 +1,93 @@
+* Theming and other look-and-feel preferences
+** Theme
+*** Monokai
+    One Theme To Rule Them All. I like Monokai.
+
+    (Currently trying out others, so this is not currently tangled.)
+    #+begin_src emacs-lisp
+      (use-package monokai-theme
+        :init
+        ;; Set the default font/typeface
+        (cond ((or (string-equal (system-name) "iMac\.local")
+                   (string-equal (system-name) "Titan")
+                   (string-equal (system-name) "GBWWSLDNML17451"))
+               (set-face-attribute 'default nil :font "Input Mono-11"))
+
+              ((string-equal (system-name) "demesne.elsevier")
+               (set-face-attribute 'default nil :font "Input Mono-9"))
+              (t (set-face-attribute 'default nil :font "-unknown-Inconsolata for Powerline-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")))
+
+        :config
+
+        ;; My hand-rolled dimmed-Monokai.
+        (setq ;; foreground and background
+         monokai-foreground     "#C5C8C6"
+         monokai-background     "#292929"
+         ;; highlights and comments
+         monokai-comments       "#6D6G66"
+         monokai-emphasis       "#CC555A"
+         monokai-highlight      "#666666"
+         monokai-highlight-alt  "#398280"
+         monokai-highlight-line "#333333"
+         monokai-line-number    "#9A9B99"
+
+         ;; colours
+         monokai-blue           "#60bAB1"
+         monokai-cyan           "#68A0B3"
+         monokai-green          "#98A84B"
+         monokai-gray           "#9A9B99"
+         monokai-violet         "#FF2C7A"
+         monokai-red            "#CC555A"
+         monokai-orange         "#D08442"
+         monokai-yellow         "#D0B344")
+
+        (load-theme 'monokai t))
+      #+end_src
+
+*** Zenburn
+    #+begin_src emacs-lisp
+      (use-package zenburn-theme
+        :config
+        (load-theme 'zenburn t))
+    #+end_src
+
+*** Doom themes
+    #+begin_src emacs-lisp :tangle yes
+      (use-package doom-themes
+        :config
+        (load-theme 'doom-one t)
+        (doom-themes-neotree-config)
+        (doom-themes-org-config))
+    #+end_src
+** Modeline
+   Spaceline, based on the Spacemacs modeline, is very handy.
+   #+begin_src emacs-lisp :tangle yes
+     (use-package spaceline)
+     (require 'spaceline-config)
+     (spaceline-spacemacs-theme)
+   #+end_src
+
+** All-the-icons
+   [[https://github.com/domtronn/all-the-icons.el][GitHub - domtronn/all-the-icons.el: A utility package to collect various Icon Fonts and propertize them within Emacs.]]
+
+   We also configure spaceline to use icons for a few things too.
+
+   #+begin_src emacs-lisp :tangle yes
+     (use-package all-the-icons
+       :config
+       (use-package all-the-icons-dired)
+       )
+
+     (use-package spaceline-all-the-icons
+       :after spaceline
+       :config
+       (spaceline-all-the-icons-theme)
+       (spaceline-toggle-version-control-on)
+       (spaceline-toggle-process-on)
+       (spaceline-toggle-selection-info-on)
+       ;; (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
+       ;; (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
+       ;; (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
+       ;; (spaceline-all-the-icons--setup-neotreekbd)         ;; Enable Neotree mode line
+       )
+   #+end_src

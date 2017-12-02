@@ -1,0 +1,66 @@
+* Dired
+  This is mostly about loading dired+, which is a better dired.
+
+  There are a few other tweaks in here too.
+
+  #+name: dired-things
+  #+begin_src emacs-lisp :tangle yes
+  (use-package dired+)
+  #+end_src
+
+  Dired has a nasty habit of opening a new buffer for every directory you visit, which clogs up the buffer list. Make it stop doing that.
+
+  #+name: dired-things
+  #+begin_src emacs-lisp :tangle yes
+  (diredp-toggle-find-file-reuse-dir 1)
+  #+end_src
+
+  I prefer to enable recursive copies and deletes by default. One day this might bite me on the ass. That day hasn't arrived yet.
+
+  $+name: dired-things
+  #+begin_src emacs-lisp :tangle yes
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
+  #+end_src
+
+  Enable "Do What I Mean" mode. If dired is split into two windows, the default target to copy or move to will be the other window
+
+  #+name: dired-things
+  #+begin_src emacs-lisp :tangle yes
+  (setq dired-dwim-target t)
+  (setq dired-listing-switches "-lh")
+  #+end_src
+
+  Automatically refresh the dired buffer when things change.
+
+  #+name: dired-things
+  #+begin_src emacs-lisp :tangle yes
+  (add-hook 'dired-mode-hook 'auto-revert-mode)
+  #+end_src
+
+
+  MacOS 'ls' doesn't support '--dired' flag. I could probably install GNU ls and... no, life's too short.
+
+  #+name: dired-things
+  #+begin_src emacs-lisp :tangle yes
+  (when (eq system-type 'darwin)
+    (defvar dired-use-ls-dired)
+    (setq dired-use-ls-dired nil)
+    )
+
+  #+end_src
+
+** Neotree
+   Emacs neotree is an implementation of Vim neotree which is a hierarchical file browser that sits in a mini-buffer to the left of the frame.
+
+   It's a little bit like the file browser in Sublime Text.
+
+   #+name: dired-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package neotree
+     :config
+     (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+     )
+
+   (global-set-key (kbd "C-c n") 'neotree)
+   #+end_src

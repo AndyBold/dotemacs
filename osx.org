@@ -1,0 +1,27 @@
+* My Emacs-on-OSX settings
+  Pretty standard stuff.
+
+  #+begin_src emacs-lisp :tangle yes
+    (when (eq system-type 'darwin)
+      (use-package osx-browse
+        :config
+        (osx-browse-mode 1)
+        )
+      (use-package osx-clipboard
+        :config
+        (osx-clipboard-mode +1)
+        )
+      (use-package osx-lib)
+      (use-package grab-mac-link
+        :config
+        (global-set-key (kbd "C-c l") 'grab-mac-link)
+        )
+      (use-package applescript-mode)
+      (use-package ob-applescript)
+
+      ;; Unmap right hand Alt so I can use it for standard OSX things like ™ £ √ etc
+      (when (boundp 'ns-right-alternate-modifier)
+        (setq ns-right-alternate-modifier nil))
+
+      )
+  #+end_src

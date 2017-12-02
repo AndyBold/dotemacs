@@ -1,0 +1,124 @@
+* Editing preferences
+** Miscellaneous
+   Save and restore open documents between sessions.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+   (desktop-save-mode 1)
+   #+end_src
+
+
+   Use spaces instead of tabs, because we're not barbarians.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+   (setq-default indent-tabs-mode nil)
+   (setq-default tab-width 2)
+   (setq-default tab-stop-list (number-sequence 2 120 2))
+   #+end_src
+
+
+   Sensible scrolling.
+   #+name: editing-things
+   #+begin_src emacs-lisp tangle: yes
+   (setq scroll-step            1
+         scroll-conservatively  10000)
+   #+end_src
+
+
+   Highlight the current line.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+   (global-hl-line-mode 1)
+   (make-variable-buffer-local 'global-hl-line-mode)
+   #+end_src
+
+   Shorter yes or no answers.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+   (defalias 'yes-or-no-p 'y-or-n-p)
+   #+end_src
+
+   Turn off auto revert messages.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+   (setq auto-revert-verbose nil)
+   #+end_src
+
+   Enable auto-complete with company.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package company)
+   #+end_src
+
+** Line wrapping
+   We don't need to hard wrap. The editor can soft wrap for us.
+   #+name: editing-things
+   #+begin_src emacs-lisp :tangle yes
+       (remove-hook 'text-mode-hook 'turn-on-auto-fill)
+       (add-hook 'text-mode-hook 'visual-line-mode 1)
+       (add-hook 'prog-mode-hook
+                 (lambda()
+                   (toggle-truncate-lines t)
+                   (outline-minor-mode t)))
+
+
+       ;; Indicate visual-line-mode wrap.
+       (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+       (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+       ;; but be gentle
+       (defface visual-line-wrap-face
+         '((t (:foreground "gray")))
+         "Face for visual line indicators.")
+       (set-fringe-bitmap-face 'left-curly-arrow 'visual-line-wrap-face)
+       (set-fringe-bitmap-face 'right-curly-arrow 'visual-line-wrap-face)
+   #+end_src
+
+** Parenthesis
+   A first class character, in Emacs.
+
+*** Paredit
+    #+name: editing-things
+    #+begin_src emacs-lisp :tangle yes
+    (use-package paredit
+    :config
+      (use-package paredit-menu))
+    #+end_src
+
+*** Rainbow delimiters
+    #+name: editing-things
+    #+begin_src emacs-lisp :tangle yes
+      (use-package rainbow-delimiters
+      :config
+        (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+        ;; Pastels...
+        (set-face-attribute 'rainbow-delimiters-depth-1-face nil
+                             :foreground "#78c5d6")
+         (set-face-attribute 'rainbow-delimiters-depth-2-face nil
+                             :foreground "#bf62a6")
+         (set-face-attribute 'rainbow-delimiters-depth-3-face nil
+                             :foreground "#459ba8")
+         (set-face-attribute 'rainbow-delimiters-depth-4-face nil
+                             :foreground "#e868a2")
+         (set-face-attribute 'rainbow-delimiters-depth-5-face nil
+                             :foreground "#79c267")
+         (set-face-attribute 'rainbow-delimiters-depth-6-face nil
+                             :foreground "#f28c33")
+         (set-face-attribute 'rainbow-delimiters-depth-7-face nil
+                             :foreground "#c5d647")
+         (set-face-attribute 'rainbow-delimiters-depth-8-face nil
+                             :foreground "#f5d63d")
+         (set-face-attribute 'rainbow-delimiters-depth-9-face nil
+                             :foreground "#78c5d6")
+
+         ;; Make unmatched parens stand out more
+         (set-face-attribute 'rainbow-delimiters-unmatched-face nil
+                             :foreground 'unspecified
+                             :inherit 'show-paren-mismatch
+                             :strike-through t)
+
+         ;; Automagically add closing parens
+         (electric-pair-mode 1)
+
+      )
+  #+end_src

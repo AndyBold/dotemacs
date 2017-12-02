@@ -1,0 +1,577 @@
+#+STARTUP: content
+
+* Org Mode
+  The biggy. If you're reading this, then you're reading an org mode file.
+
+  Org is the Swiss army knife of text based... things. It's the reason I initially took time to learn Emacs about 10 years ago and, boy, has it come a long way. I never thought that I'd be using it to help desribe and manage my =init.el=, for example.
+
+  Start by loading the core package, and configuring some basics.
+  #+name: org-things
+  #+begin_src emacs-lisp
+  (use-package org
+    :mode (("\\.org$" . org-mode)
+	         ("\\.org\\.gpg$" . org-mode))
+    :ensure org-plus-contrib
+    :config
+      (progn
+      (defvar org-enable-github-support)
+
+      (defvar org-journal-dir)
+      (setq org-journal-dir "~/org/journal/")
+
+      (setq org-directory "~/org"
+            org-enable-github-support t
+            org-M-RET-may-split-line '(default . nil)
+            org-agenda-files (list "~/org/personal.org.gpg"
+                                    "~/org/120technology.org.gpg"
+                                    "~/org/journal.org.gpg"
+                                    ))))
+  #+end_src
+
+** Basics
+*** Key bindings
+    #+name: org-things
+    #+begin_src emacs-lisp :tangle yes
+    (global-set-key (kbd "C-c r") 'org-refile)
+    #+end_src
+
+*** Configure context aware completions
+     My Lisp-fu is nowhere near this good. Not even in the same country, never mind ballpark. If you've looked at =ivy.org= then you already know that abo-abo is smart. That's why I [[https://oremacs.com/2017/10/04/completion-at-point/][stole this from him]].
+
+     Now, orgmode can support the =C-M-i= symbol completion stanza.
+
+     #+name: org-things
+     #+begin_src emacs-lisp tangle: yes
+     (setq completion-at-point-functions
+       '(org-completion-symbols
+         ora-cap-filesystem
+         org-completion-refs))
+
+     (defun org-completion-symbols ()
+     (when (looking-back "=[a-zA-Z]+")
+       (let (cands)
+         (save-match-data
+           (save-excursion
+             (goto-char (point-min))
+             (while (re-search-forward "=\\([a-zA-Z]+\\)=" nil t)
+               (cl-pushnew
+                 (match-string-no-properties 0) cands :test 'equal))
+                 cands))
+                 (when cands
+                 (list (match-beginning 0) (match-end 0) cands)))))
+
+     ;; File name completion
+     (defun ora-cap-filesystem ()
+       (let (path)
+         (when (setq path (ffap-string-at-point))
+           (let ((compl
+                  (all-completions path #'read-file-name-internal)))
+            (when compl
+              (let ((offset (ivy-completion-common-length (car compl))))
+              (list (- (point) offset) (point) compl)))))))
+     #+end_src
+
+*** Status change logging
+    Help with answering "When did I finish that task?" questions.
+    #+name: org-things
+    #+begin_src emacs-lisp :tangle yes
+    (setq org-log-into-drawer "LOGBOOK")
+    #+end_src
+
+*** Don't break tasks when adding new tasks
+    Maybe.
+
+    This should ensure that new tasks are inserted after the current task, not in the middle, when using shortcut keys.
+
+    #+name: org-things
+    #+begin_src emacs-lisp :tangle yes
+    (setq org-insert-heading-respect-content nil)
+    #+end_src
+
+*** Attachment IDs
+    Use UUIDs for attachment IDs
+
+    #+name: org-things
+    #+begin_src emacs-lisp :tangle yes
+    (defvar org-id-method)
+    (setq org-id-method (quote uuidgen))
+    #+end_src
+
+** Pretty bullets
+   Out of the box, the org bullets are a bit 'functional'. This makes them nicer.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package org-bullets)
+   (require 'org-bullets)
+   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+   ;; Make 'em pretty
+   ;; From: https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
+   (setq org-bullets-face-name (quote org-bullet-face))
+   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+   (setq org-bullets-bullet-list '("○" "☉" "◎" "◉" "○" "◌" "◎" "●" "◦" "◯" "⚬" "❍" "￮" "⊙" "⊚" "⊛" "∙" "∘"))
+
+   ;; To be tested - using a specific font for bullets
+   ;; (custom-set-faces
+   ;;  '(org-bullet-face ((t (:foreground "burlywood" :weight normal :height 1.5)))))
+
+   #+end_src
+
+** Archive options
+
+   Where, by default, do archived items get saved to? (We can always override this on a file-by-file, or item-by-item, basis.)
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (defvar org-archive-mark-done)
+   (setq org-archive-mark-done nil)
+   (setq org-archive-location "archive/archive_%s::* Archived Tasks")
+
+   ;; Include agenda archive files when searching for things
+   (setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+
+   #+end_src
+
+
+** Outline magic
+   Better outline cycling for orgmode.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package outline-magic)
+   (require 'outline-magic)
+   (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)
+   (define-key outline-minor-mode-map (kbd "<right>") 'outline-demote)
+
+   ;; Use arrow keys to move outlines in org-mode.
+   ;; Bonus: It will help to wean me off using arrow keys to navigate.
+   (with-eval-after-load "org"
+     (org-defkey org-mode-map [right] 'outline-demote)
+     (org-defkey org-mode-map [left]  'outline-promote)
+     (org-defkey org-mode-map [up]    'outline-move-subtree-up)
+     (org-defkey org-mode-map [down]  'outline-move-subtree-down)
+   )
+
+   #+end_src
+
+** Kanban for Orgmode
+   This is intermittently useful. It uses Orgmode tables, which are a world of their own, to present Orgmode tasks as a Kanban board. It's pretty cool, but it can stop working in subtle ways (to me, at least) so I've left it disabled for now.
+
+   Source: [[https://bitbucket.org/ArneBab/kanban.el/src][ArneBab / kanban.el / source / — Bitbucket]]
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   ;; (use-package kanban)
+   #+end_src
+
+** The Brain for Orgmode
+   [[http://www.thebrain.com/][The Brain]] is a powerful mindmapping tool that has some useful and interesting ways of presenting the information that you save into it.
+
+   [[https://github.com/Kungsgeten/org-brain][org-brain]] attempts to implement similar features in Orgmode. It looks like it could be a powerful way of managing certain types of information, but I haven't had time to really get to grips with it.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   ;; (use-package org-brain :ensure t
+   ;;   :init
+   ;;   (setq org-brain-path "~/org/brain")
+   ;;   ;; For Evil users
+   ;;   ;; (eval-after-load 'evil
+   ;;   ;;   (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
+   ;;   :config
+   ;;   (setq org-id-track-globally t)
+   ;;   (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
+   ;;   (setq org-brain-visualize-default-choices 'all))
+   #+end_src
+
+** Agenda
+   Diary and other scheduling things in orgmode.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (global-set-key (kbd "C-c a") 'org-agenda)
+
+   ;; Always highlight the current agenda line
+   (add-hook 'org-agenda-mode-hook
+             '(lambda () (hl-line-mode 1))
+             'append)
+
+   ;; Some settings from http://pages.sachachua.com/.emacs.d/Sacha.html#babel-init
+   ;; Lots of time grid customisation for the agenda
+   (setq org-agenda-span 7)
+   (setq org-agenda-tags-column -100) ; take advantage of the screen width
+   (setq org-agenda-sticky nil)
+   (setq org-agenda-inhibit-startup t)
+   (setq org-agenda-use-tag-inheritance t)
+   (setq org-agenda-show-log t)
+   (setq org-agenda-skip-scheduled-if-done nil)
+   (setq org-agenda-skip-deadline-if-done nil)
+   (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+   (setq org-habit-show-all-today t)
+   (setq org-habit-show-habits t)
+   (setq org-agenda-time-grid
+     '((daily today require-timed)
+	   "----------------"
+	   (800 1000 1200 1400 1600 1800)))
+   (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
+
+   ;; Various agenda views
+   (setq org-agenda-custom-commands
+     `(;; match those tagged which are not scheduled, are not DONE.
+        ("u" "Unscheduled tasks" tags "-SCHEDULED={.+}/!+TODO|+STARTED|+WAITING")
+      (;; List Notes
+        "n" "Notes" tags "NOTE"
+           ((org-agenda-overriding-header "Notes")
+            (org-tags-match-list-sublevels t)))
+      (;; List habits
+        "h" "Habits" tags-todo "STYLE=\"habit\""
+           ((org-agenda-overriding-header "Habits")
+            (org-agenda-sorting-strategy
+             '(todo-state-down effort-up category-keep)))
+             )))
+
+   ;; Kind of agenda related - calfw
+   (use-package calfw)
+   #+end_src
+
+
+** Configure refile options
+  Use refile to move things between Org sections and files.
+
+  #+name: org-things
+  #+begin_src emacs-lisp :tangle yes
+  (setq org-default-notes-file "~/org/refile.org.gpg")
+
+  ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                  (org-agenda-files :maxlevel . 9))))
+
+  ;; Use full outline paths for refile targets
+  (setq org-refile-use-outline-path t)
+
+  ;; Targets complete directly with IDO
+  (setq org-outline-path-complete-in-steps nil)
+
+  ;; Allow refile to create parent tasks with confirmation
+  (setq org-refile-allow-creating-parent-nodes (quote confirm))
+
+  ;; Exclude DONE state tasks from refile targets
+  (defun bh/verify-refile-target ()
+    "Exclude todo keywords with a done state from refile targets."
+     (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+  (setq org-refile-target-verify-function 'bh/verify-refile-target)
+  #+end_src
+
+** Capture
+   I need to make more, and better, use of capture and templates.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   ;; Set a global capture key
+   (define-key global-map "\C-cc" 'org-capture)
+
+   (setq org-capture-templates
+         (quote (("t" "todo" entry          (file "~/org/refile.org.gpg")
+                  "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+                 ("r" "respond" entry       (file "~/org/refile.org.gpg")
+                  "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+                 ("n" "note" entry          (file "~/org/refile.org.gpg")
+                  "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+                 ("j" "Journal"
+                  entry                     (file+datetree "~/org/journal.org.gpg")
+                  "* %?\n%U\n\n%i\n\n    From: %a\n" :clock-in t :clock-resume t :empty-lines 1)
+                 ("w" "org-protocol" entry  (file "~/org/refile.org.gpg")
+                  "* TODO Review %c\n%U\n" :immediate-finish t)
+                 ("m" "Meeting" entry       (file "~/org/refile.org.gpg")
+                  "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+                 ("p" "Phone call" entry    (file "~/org/refile.org.gpg")
+                  "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+                 ("h" "Habit" entry         (file "~/org/refile.org.gpg")
+                                 "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\"\")"\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n""))))
+
+   #+end_src
+
+** org-ref
+   This is a super powerful way of tracking information from PDFs into Orgmode files mixed with bibtex.
+
+   Too powerful for me, and doesn't really fit my workflow. But, kept for future reference and possible use.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   ;;
+   ;; org-ref
+   ;;
+   ;; (use-package org-ref
+   ;;   :config
+   ;;   (setq org-ref-notes-directory "~/org/bibtex/notes"
+   ;;       org-ref-bibliography-notes "~/org/bibtex/notes/index.org"
+   ;;       org-ref-default-bibliography '("~/org/bibtex/index.bib")
+   ;;       org-ref-pdf-directory "~/org/bibtex/pdfs/"))
+   #+end_src
+
+
+** Columns
+
+   Fancy pants todo lists with estimated and actual effort. For me, this is currently a little too granular.
+
+   But.
+
+   I think it's something that could be helpful. E.g, tracking time for client work, and assessing how good my estimating actually is.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   ;; Set default column view headings: Status Task Effort Clock_Summary Scheduled_Date Priority
+   (setq org-columns-default-format "%TODO %80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM %14SCHEDULED %1PRIORITY")
+
+   ;; global Effort estimate values
+   ;; global STYLE property values for completion
+   (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+                                       ("STYLE_ALL" . "habit"))))
+
+
+   ;; Tags with fast selection keys
+   (setq org-tag-alist (quote ((:startgroup)
+                               ("@errand"    . ?e)
+                               ("@work"      . ?o)
+                               ("@home"      . ?H)
+                               ("@shops"     . ?s)
+                               (:endgroup)
+                               ("WAITING"    . ?w)
+                               ("HOLD"       . ?h)
+                               ("PERSONAL"   . ?P)
+                               ("WORK"       . ?W)
+                               ("ORG"        . ?O)
+                               ("crypt"      . ?E)
+                               ("NOTE"       . ?n)
+                               ("CANCELLED"  . ?c)
+                               ("FLAGGED"    . ??))))
+
+
+   #+end_src
+
+** Templates
+   Some shortcut templates
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (setq org-structure-template-alist
+        (quote (("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
+                ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
+                ("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
+                ("c" "#+begin_center\n?\n#+end_center" "<center>\n?\n</center>")
+                ("l" "#+begin_latex\n?\n#+end_latex" "<literal style=\"latex\">\n?\n</literal>")
+                ("L" "#+latex: " "<literal style=\"latex\">?</literal>")
+                ("h" "#+begin_html\n?\n#+end_html" "<literal style=\"html\">\n?\n</literal>")
+                ("H" "#+html: " "<literal style=\"html\">?</literal>")
+                ("a" "#+begin_ascii\n?\n#+end_ascii")
+                ("A" "#+ascii: ")
+                ("i" "#+index: ?" "#+index: ?")
+                ("I" "#+include %file ?" "<include file=%file markup=\"?\">"))))
+   #+end_src
+
+** Babel
+   Configure various org-babel modes.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package ob-mongo)
+   (use-package ob-php)
+   (use-package ob-redis)
+   (use-package ob-sql-mode)
+
+
+   (org-babel-do-load-languages
+     'org-babel-load-languages
+     '(;; other Babel languages
+        (shell      . t)
+        (ditaa      . t)
+        (gnuplot    . t)
+        (latex      . t)
+        (org        . t)
+        (makefile   . t)
+        (sql        . t)
+        (js         . t)
+        (emacs-lisp . t)
+        (clojure    . t)
+        (python     . t)
+        (ruby       . t)
+        (dot        . t)
+        (plantuml   . t)))
+
+   ;; Where is ditaa.jar?
+   ;; On MacOS:
+   (setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.10/libexec/ditaa0_10.jar")
+
+   ;; refresh images after execution
+   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+
+   #+end_src
+
+
+
+** Export
+   Orgs worst kept secret - it's great at exporting to different formats.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package ox-pandoc)
+
+
+   ;; Work with PDFs
+   (use-package pdf-tools
+     :ensure t
+     :config
+     (pdf-tools-install)
+     (setq-default pdf-view-display-size 'fit-page
+                   pdf-view-use-imagemagick t
+                   pdf-view-midnight-colors '("white smoke" . "gray5"))
+     (bind-keys :map pdf-view-mode-map
+        ("\\" . hydra-pdftools/body)
+        ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
+        ("g"  . pdf-view-first-page)
+        ("G"  . pdf-view-last-page)
+        ("l"  . image-forward-hscroll)
+        ("h"  . image-backward-hscroll)
+        ("j"  . pdf-view-next-line-or-next-page)
+        ("k"  . pdf-view-previous-line-or-previous-page)
+        ("e"  . pdf-view-goto-page)
+        ("t"  . pdf-view-goto-label)
+        ("u"  . pdf-view-revert-buffer)
+        ("al" . pdf-annot-list-annotations)
+        ("ad" . pdf-annot-delete)
+        ("aa" . pdf-annot-attachment-dired)
+        ("am" . pdf-annot-add-markup-annotation)
+        ("at" . pdf-annot-add-text-annotation)
+        ("y"  . pdf-view-kill-ring-save)
+        ("i"  . pdf-misc-display-metadata)
+        ("s"  . pdf-occur)
+        ("b"  . pdf-view-set-slice-from-bounding-box)
+        ("r"  . pdf-view-reset-slice))
+
+     (when (package-installed-p 'hydra)
+       (bind-keys :map pdf-view-mode-map
+                 ("\\" . hydra-pdftools/body))
+       (defhydra hydra-pdftools (:color blue :hint nil)
+          "
+                                                                        ╭───────────┐
+         Move  History   Scale/Fit     Annotations  Search/Link    Do   │ PDF Tools │
+     ╭──────────────────────────────────────────────────────────────────┴───────────╯
+        ^^^_g_^^^       _B_    ^↧^    _+_    ^ ^     [_al_] list    [_s_] search      [_u_] revert buffer
+        ^^^^↑^^^^       ^↑^    _H_    ^↑^  ↦ _W_ ↤   [_am_] markup  [_o_] outline     [_i_] info
+        ^^^_p_^^^       ^ ^    ^↥^    _0_    ^ ^     [_at_] text    [_F_] link        [_d_] midgnight mode
+        ^^^^↑^^^^       ^↓^  ╭─^─^─┐  ^↓^  ╭─^ ^─┐   [_ad_] delete  [_f_] search link [_D_] print mode
+   _h_ ← _e_/_t_ → _l_  _N_  │ _P_ │  _-_    _b_     [_aa_] dired
+        ^^^^↓^^^^       ^ ^  ╰─^─^─╯  ^ ^  ╰─^ ^─╯   [_y_]  yank
+        ^^^_n_^^^       ^ ^  _r_eset slice box
+        ^^^^↓^^^^
+        ^^^_G_^^^
+     --------------------------------------------------------------------------------
+          "
+          ("\\" hydra-master/body "back")
+          ("<ESC>" nil "quit")
+          ("al" pdf-annot-list-annotations)
+          ("ad" pdf-annot-delete)
+          ("aa" pdf-annot-attachment-dired)
+          ("am" pdf-annot-add-markup-annotation)
+          ("at" pdf-annot-add-text-annotation)
+          ("y"  pdf-view-kill-ring-save)
+          ("+" pdf-view-enlarge :color red)
+          ("-" pdf-view-shrink :color red)
+          ("0" pdf-view-scale-reset)
+          ("H" pdf-view-fit-height-to-window)
+          ("W" pdf-view-fit-width-to-window)
+          ("P" pdf-view-fit-page-to-window)
+          ("n" pdf-view-next-page-command :color red)
+          ("p" pdf-view-previous-page-command :color red)
+          ("d" pdf-view-midnight-minor-mode)
+          ("D" pdf-view-printer-minor-mode)
+          ("b" pdf-view-set-slice-from-bounding-box)
+          ("r" pdf-view-reset-slice)
+          ("g" pdf-view-first-page)
+          ("G" pdf-view-last-page)
+          ("e" pdf-view-goto-page)
+          ("t" pdf-view-goto-label)
+          ("o" pdf-outline)
+          ("s" pdf-occur)
+          ("i" pdf-misc-display-metadata)
+          ("u" pdf-view-revert-buffer)
+          ("F" pdf-links-action-perfom)
+          ("f" pdf-links-isearch-link)
+          ("B" pdf-history-backward :color red)
+          ("N" pdf-history-forward :color red)
+          ("l" image-forward-hscroll :color red)
+          ("h" image-backward-hscroll :color red)))
+
+      (use-package org-pdfview
+         :ensure t))
+
+
+   ;; Sneaking in some bibtex
+   ;; https://github.com/tmalsburg/helm-bibtex
+   ;; and
+   ;; https://codearsonist.com/reading-for-programmers
+
+   (use-package ivy-bibtex
+     :config
+     (setq bibtex-completion-bibliography
+          '("~/org/bibtex/bibtex-default.org"))
+
+     (setq bibtex-completion-library-path '("~/org/bibtex/pdfs"))
+     (setq bibtex-completion-notes-path "~/org/bibtex/notes")
+     )
+
+   ;; Add Interleave (https://github.com/rudolfochrist/interleave)
+   (use-package interleave)
+
+   ;; Add some more LaTeX classes. CV Classes assume that various classes from
+   ;; http://www.latextemplates.com have been installed.
+   (add-to-list 'org-latex-classes
+               '("cvlongprofessional"
+                 "\\documentclass{res}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+   (add-to-list 'org-latex-classes
+               '("cvawesome"
+                 "\\documentclass{awesome-cv}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+   (add-to-list 'org-latex-classes
+               '("cv20second"
+                 "\\class{twentysecondcv}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+
+     ;; Define some LaTeX classes.
+     (add-to-list 'org-latex-classes
+                 '("tufte-book"
+                   "\\documentclass{tufte-book}"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+     (add-to-list 'org-latex-classes
+                 '("tufte-handout"
+                   "\\documentclass{tufte-handout}"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+   #+end_src

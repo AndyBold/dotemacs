@@ -1,0 +1,7 @@
+* Hashicorp
+  Hashicorp toolset things
+
+  #+begin_src emacs-lisp :tangle yes
+    (use-package hcl-mode)
+    (use-package terraform-mode)
+  #+end_src

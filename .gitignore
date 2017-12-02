@@ -1,0 +1,66 @@
+*~
+*.elc
+recentf
+persp-confs/persp-auto-save
+persp-auto-save
+smex-items
+persp-confs/*
+dotfiles/vanilla-emacs.d/persp-confs/*
+dotfiles/vanilla-emacs.d/persp-confs/persp-auto-save
+dotfiles/vanilla-emacs.d/recentf
+dotfiles/vanilla-emacs.d/url/
+dotfiles/vanilla-emacs.d/elfeed/*
+elfeed/*
+*/projectile-bookmarks.eld
+./ido.last
+
+tutorial
+url
+../../RSS/
+
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/
+
+# cask packages
+.cask/
+dist/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# projectiles files
+.projectile
+projectile-bookmarks.eld
+
+# directory configuration
+.dir-locals.el
+
+# secrets.org.el is generated from secrets.org.gpg, and is not a file that I want
+# to be in any repository.
+secrets.org.el
