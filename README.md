@@ -47,3 +47,7 @@ in `settings.org` I can use the arrow keys to move entire sections
 around and not worry too much that I'm breaking the code within. At
 worst, I'll break the code that reads the file, and that's easy to fix
 when I do.
+
+# .gitignore
+
+The `.gitignore` included here has explanatory comments. Tweak as required.
