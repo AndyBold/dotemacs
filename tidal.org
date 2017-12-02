@@ -41,8 +41,8 @@
                                      (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
   )
 
-    (setq load-path (cons "~/.emacs.d/private/packages/" load-path))
-    (require 'tidal)
+;;    (setq load-path (cons "~/.emacs.d/private/packages/" load-path))
+;;    (require 'tidal)
     (setq tidal-interpreter "/usr/local/bin/ghci")
     (add-hook 'tidal-mode-hook
           (lambda()
