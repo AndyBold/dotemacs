@@ -1,4 +1,6 @@
-#+STARTUP: content
+#+OPTIONS: toc:4 h:4
+#+STARTUP: showeverything
+
 * Ivy
 ** The core.
    Install and configure core Ivy things.
@@ -37,6 +39,9 @@
 
        ;; Set up a shortcut to call layout saving
        (global-set-key (kbd "C-c C-w") 'ivy-push-view)
+
+       ;; New in 0.10.0: Use C-p to choose your input. I.e., if creating file `foo`, override the selcted `foobar`.
+       (setq ivy-use-selectable-prompt t)
        )
   #+end_src
 
