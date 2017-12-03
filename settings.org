@@ -1,3 +1,5 @@
+ #+OPTIONS: toc:5
+
 * Startup Config
 Do some things that we want to happen before everything else.
 ** Disable noisy startup things
