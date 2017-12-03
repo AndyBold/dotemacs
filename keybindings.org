@@ -1,3 +1,6 @@
+#+OPTIONS: toc:4 h:4
+#+STARTUP: showeverything
+
 * My custom key binds
 ** Kill words, not characters
 
@@ -19,7 +22,6 @@
 
 ** Toggle comments
    Toggle comments on or off for the selected region. Language aware, so you get the correct comment syntax.
-
    #+begin_src emacs-lisp :tangle yes
    (global-set-key (kbd "C-c #") 'comment-or-uncomment-region)
    #+end_src
