@@ -141,7 +141,7 @@ Do some things that we want to happen before everything else.
    :config
      (which-key-mode))
    #+end_src
-** Files
+** [[file.org][File handling]]
    Tweak how we interact with files. Define a central place for backups and autosaves. etc.
    #+name: file-things
    #+begin_src emacs-lisp :tangle yes
