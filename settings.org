@@ -14,8 +14,13 @@ Do some things that we want to happen before everything else.
     (setq initial-scratch-message nil)
     (setq initial-buffer-choice "~/")
     #+end_src
+** Custom settings location
+   By default, these go into `init.el`. I'd rather keep them somewhere else to avoid overloading `init.el`.
+   #+begin_src emacs-lisp :tangle yes
+   (setq custom-file "~/.emacs.d/custom-settings.el")
+   #+end_src
 
-* Always install packages if they aren't already installed.
+** Always install packages if they aren't already installed.
   Or, in other words, if you start with nothing but `init.el` and the `.org` files, the various `use-package` calls will bootstrap the environment for you. (Subject to any caveats noted in [[../README.md][README.md]])
    #+name: package-management
    #+begin_src emacs-lisp :tangle yes
