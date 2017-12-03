@@ -1,4 +1,6 @@
- #+TOC: headlines 3
+#+TITLE: Andy Bold's Emacs configuration
+#+OPTIONS: toc:4 h:4
+#+STARTUP: showeverything
 
 * Startup Config
 Do some things that we want to happen before everything else.
