@@ -1,3 +1,6 @@
+#+OPTIONS: toc:4 h:4
+#+STARTUP: showeverything
+
 * Editing preferences
 ** Miscellaneous
    Save and restore open documents between sessions.
@@ -5,7 +8,6 @@
    #+begin_src emacs-lisp :tangle yes
    (desktop-save-mode 1)
    #+end_src
-
 
    Use spaces instead of tabs, because we're not barbarians.
    #+name: editing-things
@@ -15,6 +17,10 @@
    (setq-default tab-stop-list (number-sequence 2 120 2))
    #+end_src
 
+  Sentences end with a single space.
+  #+begin_src emacs-lisp :tangle yes
+  (setq sentence-end-double-space nil)
+  #+end_src
 
    Sensible scrolling.
    #+name: editing-things
@@ -22,7 +28,6 @@
    (setq scroll-step            1
          scroll-conservatively  10000)
    #+end_src
-
 
    Highlight the current line.
    #+name: editing-things

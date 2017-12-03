@@ -1,3 +1,6 @@
+#+OPTIONS: toc:4 h:4
+#+STARTUP: showeverything
+
 * Files
 
   Automatically revert buffers that are updated outside Emacs. e.g., org files updated by git pull.
@@ -37,10 +40,4 @@
   (setq tramp-backup-directory-alist backup-directory-alist)
   (setq tramp-auto-save-directory autosave-dir)
   (setq tramp-default-method "ssh")
-  #+end_src
-
-
-  Sentences end with a single space.
-  #+begin_src emacs-lisp :tangle yes
-  (setq sentence-end-double-space nil)
   #+end_src
