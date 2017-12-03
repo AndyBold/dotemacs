@@ -201,7 +201,7 @@ Do some things that we want to happen before everything else.
                      (setq eyebrowse-new-workspace t)))
 
    #+end_src
-** OSX settings
+** [[osx.org][OSX settings]]
    #+begin_src emacs-lisp :tangle yes
      (org-babel-load-file
       (expand-file-name "osx.org"
@@ -210,7 +210,7 @@ Do some things that we want to happen before everything else.
    #+end_src
 * Package configuration
   Now to the meat and bones.
-** Ivy
+** [[ivy.org][Ivy]]
    [[https://github.com/abo-abo][abo-abo]] makes some amazing tools for Emacs. Ivy is a generic completion backend for Emacs, and it forms the base for Swiper, a fabulous search tool that pops up in all kinds of places. It also supports Counsel, a set of Ivy-enhanced replacements for common Emacs commands.
    #+name: ivy-things
    #+begin_src emacs-lisp :tangle yes
@@ -218,7 +218,7 @@ Do some things that we want to happen before everything else.
      (expand-file-name "ivy.org"
                        user-emacs-directory))
    #+end_src
-** Orgmode
+** [[org.org][Orgmode]]
    This is the tool that made me learn Emacs about a decade ago. It's changed a lot, for the better.
    #+name: org-things
    #+begin_src emacs-lisp :tangle yes
@@ -226,28 +226,28 @@ Do some things that we want to happen before everything else.
      (expand-file-name "org.org"
                        user-emacs-directory))
    #+end_src
-** Hyperbole
+** [[hyperbole.org][Hyperbole]]
    #+name: hyperbole-things
    #+begin_src emacs-lisp :tangle yes
    (org-babel-load-file
      (expand-file-name "hyperbole.org"
                        user-emacs-directory))
    #+end_src
-** Magit
+** [[magit.org][Magit]]
    #+name: magit-things
    #+begin_src emacs-lisp :tangle yes
    (org-babel-load-file
      (expand-file-name "magit.org"
                        user-emacs-directory))
    #+end_src
-** Dired
+** [[dired.org][Dired]]
    #+name: dired-things
    #+begin_src emacs-lisp :tangle yes
    (org-babel-load-file
      (expand-file-name "dired.org"
                        user-emacs-directory))
    #+end_src
-** Tidal
+** [[tidal.org][Tidal]]
    Tidal cycles is a live coding environment for sound production, and great for noodling around with.
    #+name: tidal-things
    #+begin_src emacs-lisp :tangle yes
@@ -255,14 +255,14 @@ Do some things that we want to happen before everything else.
      (expand-file-name "tidal.org"
                        user-emacs-directory))
    #+end_src
-** Crypto
+** [[crypto.org][Crypto]]
    #+name: crypto-things
    #+begin_src emacs-lisp :tangle yes
    (org-babel-load-file
      (expand-file-name "crypto.org"
                        user-emacs-directory))
    #+end_src
-** Undo
+** [[undo.org][Undo]]
    Mostly installing undo-tree. OK. Only installing undo-tree.
    #+name: undo-things
    #+begin_src emacs-lisp :tangle yes
@@ -270,7 +270,7 @@ Do some things that we want to happen before everything else.
      (expand-file-name "undo.org"
                        user-emacs-directory))
    #+end_src
-** Jira
+** [[jira.org][Jira]]
    Everywhere I go, Jira is there waiting for me. Might as well make it easy to use.
    #+begin_src emacs-lisp :tangle yes
      (org-babel-load-file
@@ -278,7 +278,7 @@ Do some things that we want to happen before everything else.
                         user-emacs-directory))
 
    #+end_src
-** Look and feel
+** [[theme.org][Look and feel]]
    #+begin_src emacs-lisp :tangle yes
      (org-babel-load-file
       (expand-file-name "theme.org"
@@ -286,7 +286,7 @@ Do some things that we want to happen before everything else.
 
    #+end_src
 ** Editing
-*** Core editing tweaks
+*** [[editing.org][Core editing tweaks]]
     This is a collection of various general editing things. Some of them probably sit better in other places but, for now, they're here.
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
@@ -294,14 +294,14 @@ Do some things that we want to happen before everything else.
                          user-emacs-directory))
 
     #+end_src
-*** Flyspell
+*** [[flyspell.org][Flyspell]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "flyspell.org"
                          user-emacs-directory))
 
     #+end_src
-*** Snippets
+*** [[snippets.org][Snippets]]
     Shortcuts. Who doesn't love 'em?
     #+name: editing-things
     #+begin_src emacs-lisp :tangle yes
@@ -309,14 +309,14 @@ Do some things that we want to happen before everything else.
       (expand-file-name "snippets.org"
                         user-emacs-directory))
     #+end_src
-*** Markdown
+*** [[markdown.org][Markdown]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "markdown.org"
                          user-emacs-directory))
 
     #+end_src
-*** Blogging
+*** [[blog.org][Blogging]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "blog.org"
@@ -324,7 +324,7 @@ Do some things that we want to happen before everything else.
 
     #+end_src
 ** Programming
-*** Flycheck
+*** [[flycheck.org][Flycheck]]
     The syntax checking engine.
     #+begin_src emacs-lisp :tangle yes
     (org-babel-load-file
@@ -332,63 +332,63 @@ Do some things that we want to happen before everything else.
     user-emacs-directory))
 
     #+end_src
-*** Ansible
+*** [[ansible.org][Ansible]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "ansible.org"
                          user-emacs-directory))
 
     #+end_src
-*** Cmake
+*** [[cmake.org][Cmake]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "cmake.org"
                          user-emacs-directory))
 
     #+end_src
-*** Python
+*** [[python.org][Python]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "python.org"
                          user-emacs-directory))
 
     #+end_src
-*** Lua
+*** [[lua.org][Lua]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "lua.org"
                          user-emacs-directory))
 
     #+end_src
-*** PHP
+*** [[pho.org][PHP]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "php.org"
                          user-emacs-directory))
 
     #+end_src
-*** Restclient
+*** [[restclient.org][Restclient]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "restclient.org"
                          user-emacs-directory))
 
     #+end_src
-*** Web
+*** [[web.org][Web]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "web.org"
                          user-emacs-directory))
 
     #+end_src
-*** Ruby
+*** [[ruby.org][Ruby]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "ruby.org"
                          user-emacs-directory))
 
     #+end_src
-*** Groovy
+*** [[groovy.org][Groovy]]
     Or not.
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
@@ -396,29 +396,29 @@ Do some things that we want to happen before everything else.
                          user-emacs-directory))
 
     #+end_src
-*** Hashicorp
+*** [[hashicorp.org][Hashicorp]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "hashicorp.org"
                          user-emacs-directory))
 
     #+end_src
-*** Json
+*** [[json.org][Json]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "json.org"
                          user-emacs-directory))
 
     #+end_src
-** Shell
-   A step too far...
+** [[shell.org][Shell]]
+   A step too far for me. I like my shells z-shaped.
    #+begin_src emacs-lisp :tangle yes
      (org-babel-load-file
       (expand-file-name "shell.org"
                         user-emacs-directory))
 
    #+end_src
-** Diagramming
+** [[diagrams.org][Diagramming]]
    #+begin_src emacs-lisp :tangle yes
    (org-babel-load-file
    (expand-file-name "diagrams.org"
@@ -426,20 +426,20 @@ Do some things that we want to happen before everything else.
 
    #+end_src
 ** Utilities
-*** Docker
+*** [[docker.org][Docker]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "docker.org"
                          user-emacs-directory))
     #+end_src
-*** Vagrant
+*** [[vagrant.org][Vagrant]]
     #+begin_src emacs-lisp :tangle yes
       (org-babel-load-file
        (expand-file-name "vagrant.org"
                          user-emacs-directory))
 
     #+end_src
-** Key bindings
+** [[keybindings.org][Key bindings]]
    Call this at the end, in case we're referring to something that we're loading elsewhere.
    #+begin_src emacs-lisp :tangle yes
      (org-babel-load-file
