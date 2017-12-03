@@ -271,6 +271,7 @@
    #+begin_src emacs-lisp :tangle yes
    ;; Set a global capture key
    (define-key (current-global-map) [remap org-capture] 'counsel-org-capture)
+   (define-key (current-global-map) [remap org-goto] 'counsel-org-goto)
 
    (setq org-capture-templates
          (quote (("t" "todo" entry          (file "~/org/refile.org.gpg")
