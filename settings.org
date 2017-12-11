@@ -14,6 +14,15 @@ Do some things that we want to happen before everything else.
     (setq initial-scratch-message nil)
     (setq initial-buffer-choice "~/")
     #+end_src
+** [[crypto.org][Crypto]]
+   Configure crypto things early so they're ready to use.
+   #+name: crypto-things
+   #+begin_src emacs-lisp :tangle yes
+   (org-babel-load-file
+     (expand-file-name "crypto.org"
+                       user-emacs-directory))
+   #+end_src
+
 ** Custom settings location
    By default, these go into `init.el`. I'd rather keep them somewhere else to avoid overloading `init.el`.
    #+begin_src emacs-lisp :tangle yes
@@ -266,13 +275,6 @@ Do some things that we want to happen before everything else.
    #+begin_src emacs-lisp :tangle yes
    (org-babel-load-file
      (expand-file-name "tidal.org"
-                       user-emacs-directory))
-   #+end_src
-** [[crypto.org][Crypto]]
-   #+name: crypto-things
-   #+begin_src emacs-lisp :tangle yes
-   (org-babel-load-file
-     (expand-file-name "crypto.org"
                        user-emacs-directory))
    #+end_src
 ** [[undo.org][Undo]]
