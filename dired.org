@@ -1,3 +1,7 @@
+#+TITLE: Dired tweaks
+#+OPTIONS: toc:4 h:4
+#+STARTUP: showeverything
+
 * Dired
   This is mostly about loading dired+, which is a better dired.
 
@@ -55,12 +59,26 @@
 
    It's a little bit like the file browser in Sublime Text.
 
+   *Currently disabled*. There are enough conflicts between Neotree and other things that I used - mostly around window/frame/buffer handling - that I'm taking Ranger for a spin for a while.
+
    #+name: dired-things
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle no
    (use-package neotree
      :config
      (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
      )
 
    (global-set-key (kbd "C-c n") 'neotree)
+   #+end_src
+
+** Ranger
+   [[https://github.com/ralesi/ranger.el][ralesi/ranger.el: Bringing the goodness of ranger to dired!]]
+
+   #+name: dired-things
+   #+begin_src emacs-lisp :tangle yes
+   (use-package ranger
+     :config
+     (ranger-override-dired-mode t)
+     (setq ranger-cleanup-eagerly t)
+     )
    #+end_src
