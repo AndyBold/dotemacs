@@ -377,6 +377,7 @@
    #+begin_src emacs-lisp :tangle yes
    (setq org-structure-template-alist
         (quote (("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
+                ("sl" "#+begin_src emacs-lisp :tangle yes\n?\n#+end_src" "<src lang=\"?\">\n\n</src>")
                 ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
                 ("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
                 ("c" "#+begin_center\n?\n#+end_center" "<center>\n?\n</center>")
