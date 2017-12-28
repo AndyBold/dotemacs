@@ -172,6 +172,7 @@ Do some things that we want to happen before everything else.
                        user-emacs-directory))
 
    #+end_src
+** [[search.org][File searching]]
 ** Window and workspace management
    Use Winum to enable window-switching-by-numbers.
 
