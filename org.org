@@ -8,26 +8,38 @@
   Start by loading the core package, and configuring some basics.
   #+name: org-things
   #+begin_src emacs-lisp
-  (use-package org
-    :mode (("\\.org$" . org-mode)
-	         ("\\.org\\.gpg$" . org-mode))
-    :ensure org-plus-contrib
-    :config
+    (use-package org
+      :mode (("\\.org$" . org-mode)
+             ("\\.org\\.gpg$" . org-mode))
+      :ensure org-plus-contrib
+      :init
       (progn
-      (defvar org-enable-github-support)
+        (setq org-expiry-inactive-timestamps t)
+        (setq org-clock-idle-time nil)
+        (setq org-log-done 'time)
+        (setq org-clock-continuously nil)
+        (setq org-clock-persist t)
+        (setq org-clock-in-switch-to-state "STARTED")
+        (setq org-clock-in-resume nil)
+        (setq org-show-notification-handler 'message)
+        (setq org-clock-report-include-clocking-task t))
+      :config
+      (progn
+        (org-clock-persistence-insinuate)
+        (defvar org-enable-github-support)
 
-      (defvar org-journal-dir)
-      (setq org-journal-dir "~/org/journal/")
+        (defvar org-journal-dir)
+        (setq org-journal-dir "~/org/journal/")
 
-      (setq org-directory "~/org"
-            org-enable-github-support t
-            org-M-RET-may-split-line '(default . nil)
-            org-agenda-files (list "~/org/personal.org.gpg"
-                                    "~/org/120technology.org.gpg"
-                                    "~/org/journal.org.gpg"
-                                    )
-            all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
-            )))
+        (setq org-directory "~/org"
+              org-enable-github-support t
+              org-M-RET-may-split-line '(default . nil)
+              org-agenda-files (list "~/org/personal.org.gpg"
+                                     "~/org/120technology.org.gpg"
+                                     "~/org/journal.org.gpg"
+                                     )
+              all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
+              )))
   #+end_src
 ** Basics
 *** Key bindings
