@@ -2,42 +2,77 @@
 #+STARTUP: showeverything
 
 * Files
-
+** Auto-revert
   Automatically revert buffers that are updated outside Emacs. e.g., org files updated by git pull.
 
   #+begin_src emacs-lisp :tangle yes
   (global-auto-revert-mode t)
   #+end_src
 
-
+** Whitespace
   Remove trailing whitespace when saving.
 
   #+begin_src emacs-lisp :tangle yes
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   #+end_src
 
+** File locations
+*** Backup files
+   Put backup files in a consistent place.
+   - Makes it easier to find them after a mid-edit crash
+   - Stops them from crudding up git directories
 
-  Put backup files in a consistent place.
-  - Makes it easier to find them after a mid-edit crash
-  - Stops them from crudding up git directories
+   #+begin_src emacs-lisp :tangle yes
+   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+   #+end_src
+
+*** Auto-saves
+   And the same for autosaves.
+
+   #+begin_src emacs-lisp :tangle yes
+   (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
+   (setq auto-save-list-file-prefix autosave-dir)
+   (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+   #+end_src
+
+*** Tramp
+   And, in case I get round to using it, configure tramp to use the same
+
+   #+begin_src emacs-lisp :tangle yes
+   (setq tramp-backup-directory-alist backup-directory-alist)
+   (setq tramp-auto-save-directory autosave-dir)
+   (setq tramp-default-method "ssh")
+   #+end_src
+
+** Use registers to quickly jump to common files
+  From: [[http://pages.sachachua.com/.emacs.d/Sacha.html#org332b2fd][Sacha Chua's Emacs configuration]]
+
+  Jump to a register using =C-x r j= followed by the letter.
 
   #+begin_src emacs-lisp :tangle yes
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-  #+end_src
+    (defvar ab/refile-map (make-sparse-keymap))
+
+    (defmacro ab/defshortcut (key file)
+      `(progn
+         (set-register ,key (cons 'file ,file))
+         (define-key ab/refile-map
+           (char-to-string ,key)
+           (lambda (prefix)
+             (interactive "p")
+             (let ((org-refile-targets '(((,file) :maxlevel . 6)))
+                   (current-prefix-arg (or current-prefix-arg '(4))))
+               (call-interactively 'org-refile))))))
 
 
-  And the same for autosaves.
+    (define-key ab/refile-map "," 'ab/org-refile-to-previous-in-file)
 
-  #+begin_src emacs-lisp :tangle yes
-  (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
-  (setq auto-save-list-file-prefix autosave-dir)
-  (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
-  #+end_src
+    (ab/defshortcut ?i "~/.emacs.d/settings.org")
+    (ab/defshortcut ?p "~/org/personal.org.gpg")
+    (ab/defshortcut ?w "~/org/120technology.org.gpg")
+    (ab/defshortcut ?c "~/org/clients")
+    (ab/defshortcut ?r "~/org/refile.org.gpg")
+    (ab/defshortcut ?t "~/org/techtips.org.gpg")
+    (ab/defshortcut ?e "~/org/essential-tools.org")
+    (ab/defshortcut ?s "~/src")
 
-  And, in case I get round to using it, configure tramp to use the same
-
-  #+begin_src emacs-lisp :tangle yes
-  (setq tramp-backup-directory-alist backup-directory-alist)
-  (setq tramp-auto-save-directory autosave-dir)
-  (setq tramp-default-method "ssh")
   #+end_src
