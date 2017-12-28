@@ -210,18 +210,26 @@
 ** Agenda
    Diary and other scheduling things in orgmode.
 
+   Keyboard shortcut.
    #+name: org-things
    #+begin_src emacs-lisp :tangle yes
    (global-set-key (kbd "C-c a") 'org-agenda)
+   #+end_src
 
-   ;; Always highlight the current agenda line
+   Always highlight the current agenda line.
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
    (add-hook 'org-agenda-mode-hook
              '(lambda () (hl-line-mode 1))
              'append)
+   #+end_src
 
-   ;; Some settings from http://pages.sachachua.com/.emacs.d/Sacha.html#babel-init
-   ;; Lots of time grid customisation for the agenda
-   (setq org-agenda-span 7)
+   Some settings from http://pages.sachachua.com/.emacs.d/Sacha.html#babel-init
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+
+   (setq org-agenda-span 5)
    (setq org-agenda-tags-column -100) ; take advantage of the screen width
    (setq org-agenda-sticky nil)
    (setq org-agenda-inhibit-startup t)
@@ -252,9 +260,22 @@
             (org-agenda-sorting-strategy
              '(todo-state-down effort-up category-keep)))
              )))
+   #+end_src
+
+   Weeks start on Monday.
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (setq org-agenda-start-on-weekday 1)
+   #+end_src
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
 
    ;; Kind of agenda related - calfw
-   (use-package calfw)
+   (use-package calfw
+   :config
+   (global-set-key (kbd "C-c c") 'cfw:open-calendar-buffer)
+   )
    #+end_src
 
 ** Configure refile options
@@ -336,7 +357,6 @@
    #+end_src
 
 ** Columns
-
    Fancy pants todo lists with estimated and actual effort. For me, this is currently a little too granular.
 
    But.
