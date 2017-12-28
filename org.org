@@ -34,10 +34,14 @@
         (setq org-directory "~/org"
               org-enable-github-support t
               org-M-RET-may-split-line '(default . nil)
-              org-agenda-files (list "~/org/personal.org.gpg"
-                                     "~/org/120technology.org.gpg"
-                                     "~/org/journal.org.gpg"
-                                     )
+              org-agenda-files
+              (delq nil
+                    (mapcar (lambda (x) (and (file-exists-p x) x))
+                            `("~/org/personal.org.gpg"
+                              "~/org/120technology.org.gpg"
+                              "~/org/journal.org.gpg"
+                              ,ab/120-client-list)))
+
               all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
               org-clock-into-drawer 1
               )))
