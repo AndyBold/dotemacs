@@ -25,9 +25,10 @@
             org-agenda-files (list "~/org/personal.org.gpg"
                                     "~/org/120technology.org.gpg"
                                     "~/org/journal.org.gpg"
-                                    ))))
+                                    )
+            all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
+            )))
   #+end_src
-
 ** Basics
 *** Key bindings
     #+name: org-things
@@ -134,7 +135,6 @@
 
    #+end_src
 
-
 ** Outline magic
    Better outline cycling for orgmode.
 
@@ -235,7 +235,6 @@
    (use-package calfw)
    #+end_src
 
-
 ** Configure refile options
   Use refile to move things between Org sections and files.
 
@@ -245,7 +244,9 @@
 
   ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
   (setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                  (org-agenda-files :maxlevel . 9))))
+                                  (org-agenda-files :maxlevel . 9)
+                                  (all-my-org-files :maxlevel . 9)
+                                  )))
 
   ;; Use full outline paths for refile targets
   (setq org-refile-use-outline-path t)
@@ -311,7 +312,6 @@
    ;;       org-ref-default-bibliography '("~/org/bibtex/index.bib")
    ;;       org-ref-pdf-directory "~/org/bibtex/pdfs/"))
    #+end_src
-
 
 ** Columns
 
@@ -409,8 +409,6 @@
    (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
    #+end_src
-
-
 
 ** Export
    Orgs worst kept secret - it's great at exporting to different formats.
