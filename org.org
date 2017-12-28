@@ -39,6 +39,7 @@
                                      "~/org/journal.org.gpg"
                                      )
               all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
+              org-clock-into-drawer 1
               )))
   #+end_src
 ** Basics
@@ -109,7 +110,12 @@
     (defvar org-id-method)
     (setq org-id-method (quote uuidgen))
     #+end_src
-
+** Task dependencies
+   #+begin_src emacs-lisp :tangle yes
+     (setq org-enforce-todo-dependencies t)
+     (setq org-track-ordered-property-with-tag t)
+     (setq org-agenda-dim-blocked-tasks t)
+   #+end_src
 ** Pretty bullets
    Out of the box, the org bullets are a bit 'functional'. This makes them nicer.
 
