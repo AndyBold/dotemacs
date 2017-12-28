@@ -278,6 +278,63 @@
    )
    #+end_src
 
+   More Agenda customisation via http://pages.sachachua.com/.emacs.d/Sacha.html
+
+   Set ToDo status to 'Done' with a single press of =x=.
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+     (defun ab/org-agenda-done (&optional arg)
+       "Mark current TODO as done.
+     This changes the line at point, all other lines in the agenda referring to
+     the same tree node, and the headline of the tree node in the Org-mode file."
+       (interactive "P")
+       (org-agenda-todo "DONE"))
+     ;; Override the key definition for org-exit
+     (define-key org-agenda-mode-map "x" 'ab/org-agenda-done)
+   #+end_src
+
+   Mark a task as done and create a follow up task.
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+     (defun ab/org-agenda-mark-done-and-add-followup ()
+         "Mark the current TODO as done and add another task after it.
+     Creates it at the same level as the previous task, so it's better to use
+     this with to-do items than with projects or headings."
+         (interactive)
+         (org-agenda-todo "DONE")
+         (org-agenda-switch-to)
+         (org-capture 0 "t"))
+     ;; Override the key definition
+     (define-key org-agenda-mode-map "X" 'ab/org-agenda-mark-done-and-add-followup)
+   #+end_src
+
+   Create new tasks or todos from the Agenda buffer.
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+     (defun ab/org-agenda-new ()
+       "Create a new note or task at the current agenda item.
+     Creates it at the same level as the previous task, so it's better to use
+     this with to-do items than with projects or headings."
+       (interactive)
+       (org-agenda-switch-to)
+       (org-capture 0))
+     ;; New key assignment
+     (define-key org-agenda-mode-map "N" 'ab/org-agenda-new)
+   #+end_src
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+     (defun ab/org-agenda-list-unscheduled (&rest ignore)
+       "Create agenda view for tasks that are unscheduled and not done."
+       (let* ((org-agenda-todo-ignore-with-date t)
+              (org-agenda-overriding-header "List of unscheduled tasks: "))
+         (org-agenda-get-todos)))
+     (setq org-stuck-projects
+           '("+PROJECT-MAYBE-DONE"
+             ("TODO")
+             nil
+             "\\<IGNORE\\>"))
+   #+end_src
 ** Configure refile options
   Use refile to move things between Org sections and files.
 
