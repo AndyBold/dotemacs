@@ -280,6 +280,12 @@
 
    More Agenda customisation via http://pages.sachachua.com/.emacs.d/Sacha.html
 
+   Ensure =org-agenda= is loaded.
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
+   (require 'org-agenda)
+   #+end_src
+
    Set ToDo status to 'Done' with a single press of =x=.
    #+name: org-things
    #+begin_src emacs-lisp :tangle yes
@@ -292,6 +298,9 @@
      ;; Override the key definition for org-exit
      (define-key org-agenda-mode-map "x" 'ab/org-agenda-done)
    #+end_src
+
+   #+RESULTS: org-things
+   : ab/org-agenda-done
 
    Mark a task as done and create a follow up task.
    #+name: org-things
