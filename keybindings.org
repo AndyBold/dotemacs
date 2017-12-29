@@ -25,3 +25,9 @@
    #+begin_src emacs-lisp :tangle yes
    (global-set-key (kbd "C-c #") 'comment-or-uncomment-region)
    #+end_src
+
+** Evaluate region
+   When I'm tweaking my config I spend a lot of time calling =eval-region=.
+   #+begin_src emacs-lisp :tangle yes
+   (global-set-key (kbd "C-c R") 'eval-region)
+   #+end_src
