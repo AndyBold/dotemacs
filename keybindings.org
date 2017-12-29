@@ -31,3 +31,9 @@
    #+begin_src emacs-lisp :tangle yes
    (global-set-key (kbd "C-c R") 'eval-region)
    #+end_src
+
+** Upgrade packages
+   I like the Paradox package interface, so we'll stick with that for package upgrades too.
+   #+begin_src emacs-lisp :tangle yes
+   (global-set-key (kbd "C-c P") 'paradox-upgrade-packages)
+   #+end_src
