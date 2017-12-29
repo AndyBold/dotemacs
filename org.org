@@ -246,7 +246,12 @@
              "----------------"
              (800 1000 1200 1400 1600 1800)))
      (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
+   #+end_src
 
+   I am only just starting to understand how useful the custom agenda filters are.
+
+   #+name: org-things
+   #+begin_src emacs-lisp :tangle yes
      ;; Various agenda views
      (setq org-agenda-custom-commands
            `(;; match those tagged which are not scheduled, are not DONE.
@@ -263,6 +268,14 @@
               )
              (;; In progress/started
               "i" "In Progress" tags "/+DOING|+STARTED")
+             (;; Work things only
+              "w" "Work things" tags "@work/+TODO|+DOING|+STARTED|+WAITING")
+             (;; Things held or waiting for something else
+              "Ww" "@work Waiting for" tags "@work/+HOLD|+WAITING")
+             (;; Things held or waiting for something else
+              "Wh" "@home Waiting for" tags "@home/+HOLD|+WAITING")
+             (;; Home things only
+              "H" "Home" tags "house|chores/+TODO|+DOING|+STARTED|+WAITING")
              ))
    #+end_src
 
