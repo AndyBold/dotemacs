@@ -106,3 +106,5 @@ secrets.org.el
 /undo.el
 /vagrant.el
 /web.el
+/search.el
+/bookmarks
