@@ -69,6 +69,7 @@
     (ab/defshortcut ?i "~/.emacs.d/settings.org")
     (ab/defshortcut ?p "~/org/personal.org.gpg")
     (ab/defshortcut ?w "~/org/120technology.org.gpg")
+    (ab/defshortcut ?W ab/120-client-list)
     (ab/defshortcut ?c "~/org/clients")
     (ab/defshortcut ?r "~/org/refile.org.gpg")
     (ab/defshortcut ?t "~/org/techtips.org.gpg")
