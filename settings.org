@@ -173,6 +173,13 @@ Do some things that we want to happen before everything else.
 
    #+end_src
 ** [[search.org][File searching]]
+   #+name: file-things
+   #+begin_src emacs-lisp :tangle yes
+   (org-babel-load-file
+     (expand-file-name "search.org"
+                       user-emacs-directory))
+   #+end_src
+
 ** Window and workspace management
    Use Winum to enable window-switching-by-numbers.
 
@@ -249,6 +256,7 @@ Do some things that we want to happen before everything else.
      (expand-file-name "org.org"
                        user-emacs-directory))
    #+end_src
+
 ** [[hyperbole.org][Hyperbole]]
    #+name: hyperbole-things
    #+begin_src emacs-lisp :tangle yes
