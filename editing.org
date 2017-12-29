@@ -24,7 +24,7 @@
 
    Sensible scrolling.
    #+name: editing-things
-   #+begin_src emacs-lisp tangle: yes
+   #+begin_src emacs-lisp :tangle yes
    (setq scroll-step            1
          scroll-conservatively  10000)
    #+end_src

@@ -5,47 +5,48 @@
 
   Org is the Swiss army knife of text based... things. It's the reason I initially took time to learn Emacs about 10 years ago and, boy, has it come a long way. I never thought that I'd be using it to help desribe and manage my =init.el=, for example.
 
-  Start by loading the core package, and configuring some basics.
+  Start by loading the core package and configuring some basics.
+
   #+name: org-things
-  #+begin_src emacs-lisp
-    (use-package org
-      :mode (("\\.org$" . org-mode)
-             ("\\.org\\.gpg$" . org-mode))
-      :ensure org-plus-contrib
-      :init
-      (progn
-        (setq org-expiry-inactive-timestamps t)
-        (setq org-clock-idle-time nil)
-        (setq org-log-done 'time)
-        (setq org-clock-continuously nil)
-        (setq org-clock-persist t)
-        (setq org-clock-in-switch-to-state "STARTED")
-        (setq org-clock-in-resume nil)
-        (setq org-show-notification-handler 'message)
-        (setq org-clock-report-include-clocking-task t))
-      :config
-      (progn
-        (org-clock-persistence-insinuate)
-        (defvar org-enable-github-support)
+  #+begin_src emacs-lisp :tangle yes
+  (use-package org
+    :mode (("\\.org$" . org-mode)
+           ("\\.org\\.gpg$" . org-mode))
+    :ensure org-plus-contrib
+    :init
+    (progn
+      (setq org-expiry-inactive-timestamps t)
+      (setq org-clock-idle-time nil)
+      (setq org-log-done 'time)
+      (setq org-clock-continuously nil)
+      (setq org-clock-persist t)
+      (setq org-clock-in-switch-to-state "STARTED")
+      (setq org-clock-in-resume nil)
+      (setq org-show-notification-handler 'message)
+      (setq org-clock-report-include-clocking-task t))
+    :config
+    (progn
+      (org-clock-persistence-insinuate)
+      (defvar org-enable-github-support)
+       (defvar org-journal-dir)
+      (setq org-journal-dir "~/org/journal/")
 
-        (defvar org-journal-dir)
-        (setq org-journal-dir "~/org/journal/")
+      (setq org-directory "~/org"
+            org-enable-github-support t
+            org-M-RET-may-split-line '(default . nil)
+            org-agenda-files
+            (delq nil
+                  (mapcar (lambda (x) (and (file-exists-p x) x))
+                          `("~/org/personal.org.gpg"
+                            "~/org/120technology.org.gpg"
+                            "~/org/journal.org.gpg"
+                            ab/120-client-list)))
 
-        (setq org-directory "~/org"
-              org-enable-github-support t
-              org-M-RET-may-split-line '(default . nil)
-              org-agenda-files
-              (delq nil
-                    (mapcar (lambda (x) (and (file-exists-p x) x))
-                            `("~/org/personal.org.gpg"
-                              "~/org/120technology.org.gpg"
-                              "~/org/journal.org.gpg"
-                              ,ab/120-client-list)))
-
-              all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
-              org-clock-into-drawer 1
-              )))
+            all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
+            org-clock-into-drawer 1
+            )))
   #+end_src
+
 ** Basics
 *** Key bindings
     #+name: org-things
@@ -59,7 +60,7 @@
      Now, orgmode can support the =C-M-i= symbol completion stanza.
 
      #+name: org-things
-     #+begin_src emacs-lisp tangle: yes
+     #+begin_src emacs-lisp :tangle yes
      (setq completion-at-point-functions
        '(org-completion-symbols
          ora-cap-filesystem
@@ -298,9 +299,6 @@
      ;; Override the key definition for org-exit
      (define-key org-agenda-mode-map "x" 'ab/org-agenda-done)
    #+end_src
-
-   #+RESULTS: org-things
-   : ab/org-agenda-done
 
    Mark a task as done and create a follow up task.
    #+name: org-things
