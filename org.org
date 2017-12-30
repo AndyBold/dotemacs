@@ -40,7 +40,7 @@
                           `("~/org/personal.org.gpg"
                             "~/org/120technology.org.gpg"
                             "~/org/journal.org.gpg"
-                            ab/120-client-list)))
+                            ,ab/120-client-list)))
 
             all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
             org-clock-into-drawer 1
@@ -243,8 +243,9 @@
      (setq org-habit-show-habits t)
      (setq org-agenda-time-grid
            '((daily today require-timed)
-             "----------------"
-             (800 1000 1200 1400 1600 1800)))
+             (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100)
+             "......"
+             "----------------"))
      (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
    #+end_src
 
@@ -280,6 +281,14 @@
               "Wh" "@home Waiting for" tags "@home/+HOLD|+WAITING")
              ))
    #+end_src
+
+   #+RESULTS: org-things
+   | u | Unscheduled tasks | tags      | -SCHEDULED={.+}-DEADLINE={.+}/!+TODO | +STARTED                                                                                                                | +WAITING |          |          |
+   | n | Notes             | tags      | NOTE                                 | ((org-agenda-overriding-header Notes) (org-tags-match-list-sublevels t))                                                |          |          |          |
+   | h | Habits            | tags-todo | STYLE="habit"                        | ((org-agenda-overriding-header Habits) (org-agenda-sorting-strategy (quote (todo-state-down effort-up category-keep)))) |          |          |          |
+   | i | In Progress       | tags      | /+DOING                              | +STARTED                                                                                                                |          |          |          |
+   | w | Work things       | tags      | @work/+TODO                          | +DOING                                                                                                                  | +STARTED | +WAITING |          |
+   | H | Home              | tags      | house                                | chores/+TODO                                                                                                            | +DOING   | +STARTED | +WAITING |
 
    Weeks start on Monday.
    #+name: org-things
