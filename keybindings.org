@@ -37,3 +37,9 @@
    #+begin_src emacs-lisp :tangle yes
    (global-set-key (kbd "C-c P") 'paradox-upgrade-packages)
    #+end_src
+
+** Grab org-id links
+   I started using [[http://orgmode.org/cgit.cgi/org-mode.git/tree/lisp/org-id.el][org-id]] to link tasks in and across various org files. But I've already overridden the default keyboard shortcut for org-id-store-link and become used to using it for the other function. This brings back an alternative that works for me.
+   #+begin_src emacs-lisp :tangle yes
+   (global-set-key (kbd "C-c C-x l") 'org-id-store-link)
+   #+end_src
