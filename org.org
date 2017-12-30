@@ -270,12 +270,14 @@
               "i" "In Progress" tags "/+DOING|+STARTED")
              (;; Work things only
               "w" "Work things" tags "@work/+TODO|+DOING|+STARTED|+WAITING")
+             (;; Home things only
+              "H" "Home" tags "house|chores/+TODO|+DOING|+STARTED|+WAITING")
+             (;; Label for 'W'
+              "W" . "Waiting for...")
              (;; Things held or waiting for something else
               "Ww" "@work Waiting for" tags "@work/+HOLD|+WAITING")
              (;; Things held or waiting for something else
               "Wh" "@home Waiting for" tags "@home/+HOLD|+WAITING")
-             (;; Home things only
-              "H" "Home" tags "house|chores/+TODO|+DOING|+STARTED|+WAITING")
              ))
    #+end_src
 
