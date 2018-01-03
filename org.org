@@ -24,7 +24,9 @@
                            org-annotate-file
                            org-panel
                            org-toc
-                           org-contacts))
+                           org-contacts
+                           org-secretary
+                           ))
 
        (eval-after-load 'org
          '(org-load-modules-maybe t))
