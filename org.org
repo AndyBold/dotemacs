@@ -276,6 +276,16 @@
      (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
    #+end_src
 
+   Configure a helper for org-agenda-custom-commands for org-secretary.
+
+   #+begin_src emacs-lisp :tangle yes
+     (defun ab/org-agenda-list-unscheduled (&rest ignore)
+       "Create agenda view for tasks that are unscheduled and not done."
+       (let* ((org-agenda-todo-ignore-with-date t)
+              (org-agenda-overriding-header "List of unscheduled tasks: "))
+         (org-agenda-get-todos)))
+   #+end_src
+
    I am only just starting to understand how useful the custom agenda filters are.
 
    #+name: org-things
@@ -306,7 +316,25 @@
               "Ww" "@work Waiting for" tags "@work/+HOLD|+WAITING")
              (;; Things held or waiting for something else
               "Wh" "@home Waiting for" tags "@home/+HOLD|+WAITING")
-             ))
+
+             ;; org-secretary related
+             ("h" "Work todos" tags-todoa
+              "-personal-doat={.+}-dowith={.+}/!-TASK"
+              ((org-agenda-todo-ignore-scheduled t)))
+             ("H" "All work todos" tags-todo "-personal/!-TASK-MAYBE"
+              ((org-agenda-todo-ignore-scheduled nil)))
+             ("A" "Work todos with doat or dowith" tags-todo
+              "-personal+doat={.+}|dowith={.+}/!-TASK"
+              ((org-agenda-todo-ignore-scheduled nil)))
+             ("j" "TODO dowith and TASK with"
+              ((org-sec-with-view "TODO dowith")
+               (org-sec-where-view "TODO doat")
+               (org-sec-assigned-with-view "TASK with")
+               (org-sec-stuck-with-view "STUCK with")))
+             ("J" "Interactive TODO dowith and TASK with"
+              ((org-sec-who-view "TODO dowith")))
+             )
+           )
    #+end_src
 
    #+RESULTS: org-things
@@ -334,6 +362,8 @@
    #+end_src
 
    More Agenda customisation via http://pages.sachachua.com/.emacs.d/Sacha.html
+
+   Includes some org-secretary config from [[http://juanreyero.com/article/emacs/org-teams.html][Org-mode tricks for team management]]
 
    Ensure =org-agenda= is loaded.
    #+name: org-things
@@ -385,16 +415,16 @@
 
    #+name: org-things
    #+begin_src emacs-lisp :tangle yes
-     (defun ab/org-agenda-list-unscheduled (&rest ignore)
-       "Create agenda view for tasks that are unscheduled and not done."
-       (let* ((org-agenda-todo-ignore-with-date t)
-              (org-agenda-overriding-header "List of unscheduled tasks: "))
-         (org-agenda-get-todos)))
      (setq org-stuck-projects
-           '("+PROJECT-MAYBE-DONE"
-             ("TODO")
+           '("+prj/-MAYBE-DONE"
+             ("TODO" "TASK")
              nil
              "\\<IGNORE\\>"))
+   #+end_src
+** Secretary
+
+   #+begin_src emacs-lisp :tangle yes
+   (setq org-tags-exclude-from-inheritance '("prj"))
    #+end_src
 ** Configure refile options
   Use refile to move things between Org sections and files.
