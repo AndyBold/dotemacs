@@ -109,3 +109,5 @@ secrets.org.el
 /search.el
 /bookmarks
 /network-security.data
+/.mc-lists.el
+/request/curl-cookie-jar

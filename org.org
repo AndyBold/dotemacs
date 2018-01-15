@@ -320,15 +320,15 @@
               "Wh" "@home Waiting for" tags "@home/+HOLD|+WAITING")
 
              ;; org-secretary related
-             ("h" "Work todos" tags-todoa
+             ("Wt" "Work todos" tags-todoa
               "-personal-doat={.+}-dowith={.+}/!-TASK"
               ((org-agenda-todo-ignore-scheduled t)))
-             ("H" "All work todos" tags-todo "-personal/!-TASK-MAYBE"
+             ("WH" "All work todos" tags-todo "-personal/!-TASK-MAYBE"
               ((org-agenda-todo-ignore-scheduled nil)))
-             ("A" "Work todos with doat or dowith" tags-todo
+             ("WA" "Work todos with doat or dowith" tags-todo
               "-personal+doat={.+}|dowith={.+}/!-TASK"
               ((org-agenda-todo-ignore-scheduled nil)))
-             ("j" "TODO dowith and TASK with"
+             ("Wj" "TODO dowith and TASK with"
               ((org-sec-with-view "TODO dowith")
                (org-sec-where-view "TODO doat")
                (org-sec-assigned-with-view "TASK with")
