@@ -2,6 +2,8 @@
   Credentials go into a standard .authinfo, or .authinfo.gpg, file. And it's always port even for https. e.g.:
   =machine jira.host.name login YourLogin password "Your Password"  port 80=
 
+  =jiralib-url= is set in my GPG encrypted =secrets.org.gpg= as it's not for public consumption.
+
   #+begin_src emacs-lisp :tangle yes
       (use-package jira
         :init
@@ -14,3 +16,25 @@
         (setq org-jira-worklog-sync-p nil)
       )
   #+end_src
+
+** Keybindings
+   #+begin_src emacs-lisp :tangle yes
+     (global-set-key (kbd "C-c ipg") 'org-jira-get-projects)
+     (global-set-key (kbd "C-c iib") 'org-jira-browse-issue)
+     (global-set-key (kbd "C-c iig") 'org-jira-get-issues)
+     (global-set-key (kbd "C-c iih") 'org-jira-get-issues-headonly)
+     (global-set-key (kbd "C-c iiu") 'org-jira-update-issue)
+     (global-set-key (kbd "C-c iiw") 'org-jira-progress-issue)
+     (global-set-key (kbd "C-c iin") 'org-jira-progress-issue-next)
+     (global-set-key (kbd "C-c iia") 'org-jira-assign-issue)
+     (global-set-key (kbd "C-c iir") 'org-jira-refresh-issue)
+     (global-set-key (kbd "C-c iiR") 'org-jira-refresh-issues-in-buffer)
+     (global-set-key (kbd "C-c iic") 'org-jira-create-issue)
+     (global-set-key (kbd "C-c iik") 'org-jira-copy-current-issue-key)
+     (global-set-key (kbd "C-c isc") 'org-jira-create-subtask)
+     (global-set-key (kbd "C-c isg") 'org-jira-get-subtasks)
+     (global-set-key (kbd "C-c icu") 'org-jira-update-comment)
+     (global-set-key (kbd "C-c iwu") 'org-jira-update-worklogs-from-org-clocks)
+     (global-set-key (kbd "C-c itj") 'org-jira-todo-to-jira)
+     (global-set-key (kbd "C-c iif") 'org-jira-get-issues-by-fixversion)
+   #+end_src
