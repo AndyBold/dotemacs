@@ -44,3 +44,7 @@
     #+begin_src emacs-lisp :tangle yes
     (global-set-key (kbd "C-c C-x l") 'org-id-store-link)
     #+end_src
+*** Re-map 'C-c J' for org-journal
+    #+begin_src emacs-lisp :tangle yes
+    (global-set-key (kbd "C-c J") 'org-journal-new-entry)
+    #+end_src
