@@ -13,6 +13,8 @@
     ;; Note: Neither of these options work with CentOS 7
     ;; (setq epa-pinentry-mode 'loopback)
 
+    (setq org-crypt-key "10E093A1")
+
     ;; Interact with 'pass' password store
     (use-package password-store
       :ensure t

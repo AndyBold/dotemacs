@@ -76,11 +76,7 @@
 
       (use-package org-journal :config
        (setq org-journal-enable-encryption t)
-       (setq org-journal-date-prefix "#+TITLE: ")
-       (setq org-journal-date-format "%A, %B %d %Y")
-       (setq org-journal-time-prefix "* ")
-       (setq org-journal-file-format "%Y-%m-%d")
-       )
+         )
     #+end_src
 ** Basics
 *** Key bindings
