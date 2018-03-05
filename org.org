@@ -74,9 +74,11 @@
                  org-clock-into-drawer 1
                  )))
 
-      (use-package org-journal :config
-       (setq org-journal-enable-encryption t)
-         )
+      (use-package org-journal
+        :config
+        (setq org-journal-enable-encryption t)
+        (setq org-journal-file-format "%Y-%m-%d")
+        )
     #+end_src
 ** Basics
 *** Key bindings
