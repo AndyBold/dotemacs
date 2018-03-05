@@ -11,7 +11,7 @@
         (cond ((or (string-equal (system-name) "iMac\.local")
                    (string-equal (system-name) "Titan")
                    (string-equal (system-name) "GBWWSLDNML17451"))
-               (set-face-attribute 'default nil :font "Input Mono-11"))
+               (set-face-attribute 'default nil :font "Input Mono-13"))
 
               ((string-equal (system-name) "demesne.elsevier")
                (set-face-attribute 'default nil :font "Input Mono-9"))
