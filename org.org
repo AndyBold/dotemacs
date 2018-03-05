@@ -37,44 +37,50 @@
 
     #+name: org-things
     #+begin_src emacs-lisp :tangle yes
-      (use-package org
-        :mode (("\\.org$" . org-mode)
-               ("\\.org\\.gpg$" . org-mode))
-        :ensure org-plus-contrib
-        :init
-        (progn
-          (setq org-expiry-inactive-timestamps t)
-          (setq org-clock-idle-time nil)
-          (setq org-log-done 'time)
-          (setq org-clock-continuously nil)
-          (setq org-clock-persist t)
-          (setq org-clock-in-switch-to-state "STARTED")
-          (setq org-clock-in-resume nil)
-          (setq org-show-notification-handler 'message)
-          (setq org-clock-report-include-clocking-task t))
-        :config
-        (progn
-          (org-clock-persistence-insinuate)
-          (defvar org-enable-github-support)
-          (defvar org-journal-dir)
-          (setq org-journal-dir "~/org/journal/")
+       (use-package org
+         :mode (("\\.org$" . org-mode)
+                ("\\.org\\.gpg$" . org-mode))
+         :ensure org-plus-contrib
+         :init
+         (progn
+           (setq org-expiry-inactive-timestamps t)
+           (setq org-clock-idle-time nil)
+           (setq org-log-done 'time)
+           (setq org-clock-continuously nil)
+           (setq org-clock-persist t)
+           (setq org-clock-in-switch-to-state "STARTED")
+           (setq org-clock-in-resume nil)
+           (setq org-show-notification-handler 'message)
+           (setq org-clock-report-include-clocking-task t))
+         :config
+         (progn
+           (org-clock-persistence-insinuate)
+           (defvar org-enable-github-support)
+           (defvar org-journal-dir)
+           (setq org-journal-dir "~/org/journal/")
 
-          (setq org-directory "~/org"
-                org-enable-github-support t
-                org-M-RET-may-split-line '(default . nil)
-                org-agenda-files
-                (delq nil
-                      (mapcar (lambda (x) (and (file-exists-p x) x))
-                              `("~/org/personal.org.gpg"
-                                "~/org/120technology.org.gpg"
-                                "~/org/journal.org.gpg"
-                                ,ab/120-client-list)))
+           (setq org-directory "~/org"
+                 org-enable-github-support t
+                 org-M-RET-may-split-line '(default . nil)
+                 org-agenda-files
+                 (delq nil
+                       (mapcar (lambda (x) (and (file-exists-p x) x))
+                               `("~/org/personal.org.gpg"
+                                 "~/org/120technology.org.gpg"
+                                 "~/org/journal.org.gpg"
+                                 ,ab/120-client-list)))
 
-                all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
-                org-clock-into-drawer 1
-                )))
+                 all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
+                 org-clock-into-drawer 1
+                 )))
 
-      (use-package org-journal)
+      (use-package org-journal :config
+       (setq org-journal-enable-encryption t)
+       (setq org-journal-date-prefix "#+TITLE: ")
+       (setq org-journal-date-format "%A, %B %d %Y")
+       (setq org-journal-time-prefix "* ")
+       (setq org-journal-file-format "%Y-%m-%d")
+       )
     #+end_src
 ** Basics
 *** Key bindings
@@ -191,19 +197,20 @@
 
    #+name: org-things
    #+begin_src emacs-lisp :tangle yes
-   (use-package outline-magic)
-   (require 'outline-magic)
-   (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)
-   (define-key outline-minor-mode-map (kbd "<right>") 'outline-demote)
+     (use-package outline-magic)
+     (require 'outline-magic)
+     (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)
+     (define-key outline-minor-mode-map (kbd "<right>") 'outline-demote)
 
-   ;; Use arrow keys to move outlines in org-mode.
-   ;; Bonus: It will help to wean me off using arrow keys to navigate.
-   (with-eval-after-load "org"
-     (org-defkey org-mode-map [right] 'outline-demote)
-     (org-defkey org-mode-map [left]  'outline-promote)
-     (org-defkey org-mode-map [up]    'outline-move-subtree-up)
-     (org-defkey org-mode-map [down]  'outline-move-subtree-down)
-   )
+     ;; Use arrow keys to move outlines in org-mode.
+     ;; Bonus: It will help to wean me off using arrow keys to navigate.
+     (with-eval-after-load "org"
+       (org-defkey org-mode-map [right] 'outline-demote)
+       (org-defkey org-mode-map [left]  'outline-promote)
+       (org-defkey org-mode-map [up]    'outline-move-subtree-up)
+       (org-defkey org-mode-map [down]  'outline-move-subtree-down)
+
+     )
 
    #+end_src
 
