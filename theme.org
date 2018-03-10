@@ -13,7 +13,7 @@
         (cond ((or (string-equal (system-name) "iMac\.local")
                    (string-equal (system-name) "Titan")
                    (string-equal (system-name) "GBWWSLDNML17451"))
-               (set-face-attribute 'default nil :font "Input Mono-13"))
+               (set-face-attribute 'default nil :font "Source Code Pro for Powerline-13"))
 
               (t (set-face-attribute 'default nil :font "-unknown-Inconsolata for Powerline-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")))
 
