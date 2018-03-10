@@ -1,3 +1,5 @@
+#+STARTUP: content
+
 * Theming and other look-and-feel preferences
 ** Theme
 *** Monokai
