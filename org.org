@@ -778,3 +778,12 @@
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
    #+end_src
+
+** Autolist
+   When editing a list item, pressing "Return" will insert a new list item automatically. This works for both bullet points and checkboxes, so there's no need to think about whether to use =M-<return>= or =M-S-<return>=.
+
+   #+begin_src emacs-lisp :tangle yes
+   (use-package org-autolist
+   :config
+   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
+   #+end_src
