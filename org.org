@@ -176,6 +176,19 @@
 
    #+end_src
 
+** Fancy Priorities
+   Similar to Pretty Bullets and Pretty Magit, replace normal Org priorities with fancy icons.
+   #+begin_src emacs-lisp :tangle yes
+     (use-package org-fancy-priorities
+       :ensure t
+       :hook
+       (org-mode . org-fancy-priorities-mode)
+       :config
+       (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+   #+end_src
+
+   #+RESULTS:
+   | org-fancy-priorities-mode | (lambda nil (org-autolist-mode)) | (lambda nil (org-bullets-mode 1)) | org-clock-load | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-block-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | org-journal-update-auto-mode-alist | org-eldoc-load |
 ** Archive options
 
    Where, by default, do archived items get saved to? (We can always override this on a file-by-file, or item-by-item, basis.)
@@ -779,6 +792,12 @@
 
    #+end_src
 
+** Kanban
+   Kanban in Org. Fantastic!
+
+   #+begin_src emacs-lisp :tangle yes
+   (use-package org-kanban)
+   #+end_src
 ** Autolist
    When editing a list item, pressing "Return" will insert a new list item automatically. This works for both bullet points and checkboxes, so there's no need to think about whether to use =M-<return>= or =M-S-<return>=.
 
