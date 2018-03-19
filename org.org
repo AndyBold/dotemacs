@@ -67,10 +67,10 @@
                                `("~/org/personal.org.gpg"
                                  "~/org/120technology.org.gpg"
                                  "~/org/journal.org.gpg"
-                                 ,ab/120-client-list))))
+                                 ,ab/120-client-list)))
 
                  all-my-org-files (directory-files-recursively (expand-file-name "~/org/") "\.org")
-                 org-clock-into-drawer 1)))
+                 org-clock-into-drawer 1))
 
       (use-package org-journal
         :config
