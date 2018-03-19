@@ -463,7 +463,7 @@ Do some things that we want to happen before everything else.
                          user-emacs-directory))
 
     #+end_src
-** [[keybindings.org][Key bindings]]
+** [[keybindings.org][Key bindings]
    Call this at the end, in case we're referring to something that we're loading elsewhere.
    #+begin_src emacs-lisp :tangle yes
      (org-babel-load-file
@@ -471,3 +471,4 @@ Do some things that we want to happen before everything else.
                         user-emacs-directory))
 
    #+end_src
+** [[hydra.org][Hydra]]
