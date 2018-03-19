@@ -843,3 +843,25 @@
 
       (define-key org-agenda-mode-map (kbd "\\") 'hydra-org-agenda/body)
     #+end_src
+** Radiobutton
+   [["https://github.com/Fuco1/org-radiobutton][This is neat.]]
+
+   Example usage:
+
+   \#+attr_org: :radio
+   \#+name: service-to-query
+     - [ ] localhost
+     - [X] staging
+     - [ ] production
+
+   \#+BEGIN_SRC elisp :var service=(org-radiobutton-value "service-to-query")
+   =(format "Will query the %s database" service)=
+   \#+END_SRC
+
+   \#+RESULTS:
+   =: Will query the staging database=
+   \#+end_src
+
+   #+begin_src emacs-lisp :tangle yes
+   (use-package org-radiobutton)
+   #+end_src
