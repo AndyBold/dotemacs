@@ -155,7 +155,6 @@
     ;; (bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map)
 
   #+end_src
-
 ** Git-gutter
    #+name: magit-things
    #+begin_src emacs-lisp :tangle yes
@@ -186,4 +185,9 @@
      (global-set-key (kbd "C-x v SPC") #'git-gutter:mark-hunk)
      )
 
+   #+end_src
+** Gitlab integration
+   Exactly what is says ~on the tin~ in the header above.
+   #+begin_src emacs-lisp :tangle yes
+   (use-package glab)
    #+end_src
