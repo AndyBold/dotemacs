@@ -187,11 +187,6 @@
    #+RESULTS:
    | org-fancy-priorities-mode | (lambda nil (org-autolist-mode)) | (lambda nil (org-bullets-mode 1)) | org-clock-load | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-block-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | org-journal-update-auto-mode-alist | org-eldoc-load |
 
-** Beautify Org
-   Make orgmode look a bit cleaner. Colour is nice, and also a distraction.
-   #+begin_src emacs-lisp :tangle yes
-   (use-package org-beautify-theme)
-   #+end_src
 ** Archive options
 
    Where, by default, do archived items get saved to? (We can always override this on a file-by-file, or item-by-item, basis.)
